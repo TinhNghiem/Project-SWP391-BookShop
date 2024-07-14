@@ -294,5 +294,65 @@ public class BookDao extends DBContext {
             System.out.println("Failed to add book.");
         }
     }
+    public ArrayList<Books> getLatestProducts() {
+        ArrayList<Books> books = new ArrayList<Books>();
+        String sql = "SELECT TOP 10 * FROM Books WHERE IsBanned = 0 AND IsAvailable = 1 ORDER BY CreatedAt DESC";
+        try {
+            stm = connection.prepareStatement(sql);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                Books book = new Books();
+                book.setBookID(rs.getInt("BookID"));
+                book.setTitle(rs.getString("Title"));
+                book.setPublisher(rs.getString("Publisher"));
+                book.setPublicationDate(rs.getString("PublicationDate"));
+                book.setISBN(rs.getString("ISBN"));
+                book.setPrice(rs.getString("Price"));
+                book.setStock(rs.getInt("Stock"));
+                book.setSoldQuantity(rs.getInt("SoldQuantity"));
+                book.setDescription(rs.getString("Description"));
+                book.setCoverImage(rs.getString("CoverImage"));
+                book.setIsAvailable(rs.getBoolean("IsAvailable"));
+                book.setIsBanned(rs.getBoolean("IsBanned"));
+                book.setCreatedAt(rs.getTimestamp("CreatedAt").toLocalDateTime());
+                book.setUpdatedAt(rs.getTimestamp("UpdatedAt").toLocalDateTime());
+                books.add(book);
+            }
+        } catch (Exception e) {
+            System.out.println("getLatestProducts" + e.getMessage());
+        }
+        return books;
+    }
+
+    //Lấy ra 10 cuốn sách bán chạy nhất và không bị banned và còn hàng
+    public ArrayList<Books> getBestSeller() {
+        ArrayList<Books> books = new ArrayList<Books>();
+        String sql = "SELECT TOP 10 * FROM Books WHERE IsBanned = 0 AND IsAvailable = 1 ORDER BY SoldQuantity DESC";
+        try {
+            stm = connection.prepareStatement(sql);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                Books book = new Books();
+                book.setBookID(rs.getInt("BookID"));
+                book.setTitle(rs.getString("Title"));
+                book.setPublisher(rs.getString("Publisher"));
+                book.setPublicationDate(rs.getString("PublicationDate"));
+                book.setISBN(rs.getString("ISBN"));
+                book.setPrice(rs.getString("Price"));
+                book.setStock(rs.getInt("Stock"));
+                book.setSoldQuantity(rs.getInt("SoldQuantity"));
+                book.setDescription(rs.getString("Description"));
+                book.setCoverImage(rs.getString("CoverImage"));
+                book.setIsAvailable(rs.getBoolean("IsAvailable"));
+                book.setIsBanned(rs.getBoolean("IsBanned"));
+                book.setCreatedAt(rs.getTimestamp("CreatedAt").toLocalDateTime());
+                book.setUpdatedAt(rs.getTimestamp("UpdatedAt").toLocalDateTime());
+                books.add(book);
+            }
+        } catch (Exception e) {
+            System.out.println("getBestSeller" + e.getMessage());
+        }
+        return books;
+    }
 
 }
