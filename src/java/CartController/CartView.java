@@ -15,7 +15,6 @@ import Model.Cart;
 import Model.CartItem;
 import Model.Coupons;
 import Model.Promotions;
-import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
